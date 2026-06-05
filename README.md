@@ -20,33 +20,37 @@ docker compose up --build
 ## Testar proposta aprovada
 
 ```bash
-curl -X POST http://localhost:8080/proposals \
-  -H "Content-Type: application/json" \
-  -d '{
+curl --location 'http://localhost:8080/proposal_service/api/v1/proposals' \
+--header 'Content-Type: application/json' \
+--data '{
+    "cpf": "12345678159",
     "name": "Pablo Junior",
-    "cpf": "12345678901",
-    "income": 20000,
+    "income": 16000,
     "investments": 6000,
-    "checkingAccountCreatedAt": "2022-01-01",
+    "checkingAccountCreatedAt": "2025-01-01",
     "offerType": "OFFER_B",
-    "selectedBenefits": ["VIP_LOUNGE", "POINTS"]
-  }'
+    "selectedBenefits": [
+        "VIP_LOUNGE"
+    ]
+}'
 ```
 
 ## Testar proposta recusada
 
 ```bash
-curl -X POST http://localhost:8080/proposals \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Cliente Teste",
-    "cpf": "99999999999",
-    "income": 900,
+curl --location 'http://localhost:8080/proposal_service/api/v1/proposals' \
+--header 'Content-Type: application/json' \
+--data '{
+    "cpf": "12345678144",
+    "name": "Pablo Junior",
+    "income": 3000,
     "investments": 0,
     "checkingAccountCreatedAt": "2025-01-01",
-    "offerType": "OFFER_A",
-    "selectedBenefits": ["CASHBACK"]
-  }'
+    "offerType": "OFFER_B",
+    "selectedBenefits": [
+        "VIP_LOUNGE"
+    ]
+}'
 ```
 
 ## Observações
