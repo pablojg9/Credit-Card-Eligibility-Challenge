@@ -4,6 +4,9 @@ import com.cardplatform.proposal.application.port.out.ProposalRepositoryPort;
 import com.cardplatform.proposal.domain.model.CardProposal;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Component
 public class ProposalRepositoryAdapter implements ProposalRepositoryPort {
   private final ProposalJpaRepository repository;

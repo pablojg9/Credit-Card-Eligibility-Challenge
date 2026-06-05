@@ -1,6 +1,6 @@
 package com.cardplatform.eligibility.adapter.in.web;
 
-import com.cardplatform.eligibility.application.service.EligibilityService;
+import com.cardplatform.eligibility.application.port.in.ValidateEligibilityInPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -16,16 +16,17 @@ public class EligibilityController {
 
   private static final Logger log = LoggerFactory.getLogger(EligibilityController.class);
 
-  private final EligibilityService eligibilityService;
+  private final ValidateEligibilityInPort validateEligibilityInPort;
 
   public EligibilityController(
-      final EligibilityService eligibilityService) {
-    this.eligibilityService = eligibilityService;
+      final ValidateEligibilityInPort validateEligibilityInPort) {
+    this.validateEligibilityInPort = validateEligibilityInPort;
   }
+
 
   @PostMapping("/validate")
   public ResponseEntity<EligibilityResponse> validate(@RequestBody final EligibilityRequest request) {
     log.info("Validating eligibility for request: {}", request);
-    return ResponseEntity.status(HttpStatus.OK).body(eligibilityService.validate(request));
+    return ResponseEntity.status(HttpStatus.OK).body(validateEligibilityInPort.validateEligibility(request));
   }
 }

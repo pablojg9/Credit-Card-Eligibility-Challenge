@@ -12,7 +12,9 @@ import com.cardplatform.proposal.application.port.out.EligibilityClientPort;
 import com.cardplatform.proposal.application.port.out.EventPublisherPort;
 import com.cardplatform.proposal.application.port.out.IdempotencyPort;
 import com.cardplatform.proposal.application.port.out.ProposalRepositoryPort;
+import com.cardplatform.proposal.domain.exception.DuplicateProposalException;
 import com.cardplatform.proposal.domain.model.CardProposal;
+import com.cardplatform.proposal.domain.utils.mask.MaskUtils;
 
 import java.time.Duration;
 
@@ -41,7 +43,11 @@ public class RequestCardProposalUseCase implements RequestCardProposalInPort {
 
   public CardProposalResponse execute(final CardProposalRequest request) {
     final String key = "proposal:idempotency:" + request.cpf() + ":" + request.offerType();
-    if (idempotencyPort.exists(key)) throw new IllegalStateException("Proposta duplicada enviada recentemente.");
+    if (idempotencyPort.exists(key)) {
+      throw new DuplicateProposalException(
+          "A proposal for CPF " + MaskUtils.maskCpf(request.cpf()) + " and offer type " + request.offerType() + " is already being processed."
+      );
+    }
 
     idempotencyPort.save(key, Duration.ofMinutes(10));
 

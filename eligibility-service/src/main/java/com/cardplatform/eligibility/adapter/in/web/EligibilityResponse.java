@@ -7,19 +7,25 @@ import java.util.List;
 public record EligibilityResponse(
     boolean eligible,
     String reason,
-    List<BenefitType> eligibleBenefits
+    List<BenefitType> eligibleBenefits,
+    List<BenefitType> rejectedBenefits
 ) {
-  public static EligibilityResponse approved(final List<BenefitType> benefitType) {
+
+  public static EligibilityResponse approved(List<BenefitType> benefits) {
     return new EligibilityResponse(
         true,
-        null,
-        benefitType);
+        "Cliente elegível para a oferta e benefícios selecionados.",
+        benefits,
+        List.of()
+    );
   }
 
-  public static EligibilityResponse rejected(final String message) {
+  public static EligibilityResponse rejected(String reason, List<BenefitType> rejectedBenefits) {
     return new EligibilityResponse(
         false,
-        message,
-        List.of());
+        reason,
+        List.of(),
+        rejectedBenefits
+    );
   }
 }

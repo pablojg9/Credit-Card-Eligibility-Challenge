@@ -21,28 +21,28 @@ public class CardProposal {
   private LocalDateTime updatedAt;
 
   public static CardProposal create(CardProposalRequest cardProposalRequest) {
-    var cardProposal = new CardProposal();
-    cardProposal.id = UUID.randomUUID();
-    cardProposal.cpf = cardProposalRequest.cpf();
-    cardProposal.offerType = cardProposalRequest.offerType();
-    cardProposal.benefits = cardProposalRequest.selectedBenefits();
-    cardProposal.status = ProposalStatus.RECEIVED;
-    cardProposal.createdAt = LocalDateTime.now();
-    cardProposal.updatedAt = cardProposal.createdAt;
+    CardProposal cardProposal = new CardProposal();
+    cardProposal.setId(UUID.randomUUID());
+    cardProposal.setCpf(cardProposalRequest.cpf());
+    cardProposal.setOfferType(cardProposalRequest.offerType());
+    cardProposal.setBenefits(cardProposalRequest.selectedBenefits());
+    cardProposal.setStatus(ProposalStatus.RECEIVED);
+    cardProposal.setCreatedAt(LocalDateTime.now());
+    cardProposal.setUpdatedAt(cardProposal.getCreatedAt());
     return cardProposal;
   }
 
   public void reject(String reason) {
     this.status = ProposalStatus.REJECTED;
     this.reason = reason;
-    this.updatedAt = LocalDateTime.now();
+    this.setUpdatedAt(LocalDateTime.now());
   }
 
   public void complete(UUID cardAccountId, List<BenefitType> benefits) {
     this.cardAccountId = cardAccountId;
     this.benefits = benefits;
     this.status = ProposalStatus.COMPLETED;
-    this.updatedAt = LocalDateTime.now();
+    this.setUpdatedAt(LocalDateTime.now());
   }
 
   public UUID getId() {
@@ -79,5 +79,41 @@ public class CardProposal {
 
   public LocalDateTime getUpdatedAt() {
     return updatedAt;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public void setCpf(String cpf) {
+    this.cpf = cpf;
+  }
+
+  public void setOfferType(OfferType offerType) {
+    this.offerType = offerType;
+  }
+
+  public void setStatus(ProposalStatus status) {
+    this.status = status;
+  }
+
+  public void setCardAccountId(UUID cardAccountId) {
+    this.cardAccountId = cardAccountId;
+  }
+
+  public void setBenefits(List<BenefitType> benefits) {
+    this.benefits = benefits;
+  }
+
+  public void setReason(String reason) {
+    this.reason = reason;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }
