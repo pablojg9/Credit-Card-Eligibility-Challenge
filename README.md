@@ -59,3 +59,7 @@ curl --location 'http://localhost:8080/proposal_service/api/v1/proposals' \
 - Kafka publica eventos da jornada: received, rejected e completed.
 - Dados sensíveis como CPF são mascarados no audit-service.
 - Cada microserviço tem seu próprio banco PostgreSQL.
+
+## Fluxograma
+<img width="692" height="771" alt="diagrama" src="https://github.com/user-attachments/assets/32af127d-21b2-46a0-8a53-1a21d811a75f" />
+
